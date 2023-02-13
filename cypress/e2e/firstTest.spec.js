@@ -74,27 +74,18 @@ describe('Test with backend', ()=> {
     });
 
 
-    it.only('delete a new article in a global feed', () => {
-
-        const userCredentials = {
-            "user": {
-                "email": "nurmaganbetov0486@gmail.com",
-                "password": "Sabitzer15"
-            }
-        }
+    it.only('delete a new article in a global feed', () => {       
 
         const bodyRequest = {
             "article": {
                 "tagList": [],
-                "title": "Request from API 3",
+                "title": "Request from API 5",
                 "description": "API testing is easy",
                 "body": "Angular is cool"
             }
         }
 
-        cy.request('POST', 'https://api.realworld.io/api/users/login', userCredentials)
-            .its('body').then( body => {
-                const token = body.user.token
+        cy.get('@token').then( token => {                
 
                 cy.request({
                     url: 'https://api.realworld.io/api/articles/', 
@@ -115,7 +106,7 @@ describe('Test with backend', ()=> {
                         method: 'GET'
                  }).its('body').then( body => {
                     console.log(body)
-                    expect(body.articles[1].title).not.to.equal('Request from API 3')
+                    expect(body.articles[1].title).not.to.equal('Request from API 5')
                  })
             })
     });
